@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(for f in qrcode_test.png qrcode_test2.png qrcode_test3.png qrcode_test4.png qrcode_test5.png qrcode_test6.png)",
+      "Bash(do echo \"=== Testing $f ===\")",
+      "Bash(done)",
+      "Bash(for f in test_set_crop/*.png)",
+      "Bash(ls:*)",
+      "Bash(while read f)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
