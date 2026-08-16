@@ -1,0 +1,27 @@
+from typing import List
+
+def next_permute(n: List[int]) -> List[int]:
+    for i in range(len(n)-2, -1, -1):
+        if n[i] < n[i+1]:
+            break
+    if i < 0:
+        return n
+
+    # find j that is bigger than n[i]
+    for j in range(len(n)-2, i, -1):
+        if n[j] > n[i]:
+            tmp = n[j]
+            n[j] = n[i]
+            n[i] = tmp
+            n[i+1:].reverse()
+            return n
+
+    assert False
+
+
+assert next_permute(12) == 21
+assert next_permute(315) == 351
+assert next_permute(583) == 835
+assert next_permute(12389) == 12398
+assert next_permute(34722641) == 34724126
+

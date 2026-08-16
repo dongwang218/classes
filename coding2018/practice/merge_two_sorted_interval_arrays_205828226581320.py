@@ -1,0 +1,123 @@
+from __future__ import annotations
+
+# https://www.internalfb.com/intern/recruiting/interview/questions?question_id=205828226581320
+# main difficulty is manging the open interval, in my case I use a start to keep track if there is an openning
+# took me an hour to get the example right
+
+# type annotation https://towardsdatascience.com/type-annotations-in-python-d90990b172dc
+
+from typing import List
+
+class Interval:
+    def __init__(self, start: int, end: int):
+        self.start = start
+        self.end = end
+        
+    def __repr__(self):
+        return '({}, {})'.format(self.start, self.end)
+
+    def overlap(self, b: Interval) -> bool:
+        return (self.start >= b.start and self.start <= b.end) or (b.start >= self.start and b.start <= self.end)
+
+    def __lt__(self, b: Interval) -> bool:
+        return self.end < b.start
+
+    def __ge__(self, b: Interval) -> bool:
+        return self.end >= b.end
+
+    def __eq__(self, b: Interval) -> bool:
+        if isinstance(b, Interval):
+            return self.start == b.start and self.end == b.end
+        return False
+    
+def merge_interval_arrays(a: List[Interval], b: List[Interval]) -> List[Interval]:
+    if len(a) == 0: return b
+    elif len(b) == 0: return a
+
+    results = []
+    start = None
+    i = 0
+    j = 0
+
+    while i < len(a) and j < len(b):
+        if a[i].overlap(b[j]):
+            # leave the one with larger end
+            if a[i] >= b[j]:
+                start = start or min(a[i].start, b[j].start)
+                j += 1
+            else:
+                start = start or min(a[i].start, b[j].start)
+                i += 1
+        elif a[i] < b[j]:
+            results.append(Interval(start or a[i].start, a[i].end))
+            i += 1
+            start = None
+        else:
+            results.append(Interval(start or b[j].start, b[j].end))
+            j += 1
+            start = None
+
+    # use a and i
+    if i == len(a):
+        a = b
+        i = j
+
+    results.append(Interval(start or a[i].start, a[i].end))
+    results.extend(a[i+1:])
+    return results
+
+def merge_arrays(a: List[Interval], b: List[Interval]) -> List[Interval]:
+    i = 0
+    j = 0
+    tmp = None
+
+    def get_next():
+        nonlocal i
+        nonlocal j
+        if i >= len(a):
+            if j >= len(b):
+                return None
+            else:
+                j += 1
+                return b[j-1]
+        elif j >= len(b):
+            i += 1
+            return a[i-1]
+        else:
+            if a[i].start <= b[j].start:
+                i += 1
+                return a[i-1]
+            else:
+                j += 1
+                return b[j-1]
+
+    results = []
+    tmp = get_next()
+    while tmp is not None:
+        tmp2 = get_next()
+        if tmp2 is None or tmp2.start > tmp.end:
+            # tricky only this can close tmp
+            results.append(tmp)
+            tmp = tmp2
+        elif tmp2.end <= tmp.end:
+            pass
+        else:
+            tmp = Interval(tmp.start, tmp2.end)
+    return results
+        
+if __name__ == '__main__':
+
+    a = [Interval(1, 2), Interval(3, 9)]
+    b = [Interval(4, 6), Interval(8, 10), Interval(11, 12)]
+
+    result = merge_interval_arrays(a, b)
+
+    print(result)
+    assert result == [Interval(1, 2), Interval(3, 10), Interval(11, 12)]
+    
+
+    result = merge_arrays(a, b)
+
+    print(result)
+    assert result == [Interval(1, 2), Interval(3, 10), Interval(11, 12)]
+    

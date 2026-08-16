@@ -1,0 +1,55 @@
+# 880724385416905
+
+import heapq
+from collections import defaultdict
+def topk_freq_min_heap(a, k):
+    counts = defaultdict(lambda: 0)
+    for i in a:
+        counts[i] += 1
+
+    q = []
+    for key, value in counts.items():
+        if len(q) < k:
+            heapq.heappush(q, (value, -key))
+        else:
+            if (value, -key) > q[0]:
+                heapq.heappop(q)
+                heapq.heappush(q, (value, -key))
+
+    results = []
+    while q:
+        value, key = heapq.heappop(q)
+        results.append(-key)
+    results.reverse()
+    print(results)
+    return results
+
+def topk_freq_bucketsort(a, k):
+    counts = defaultdict(lambda: 0)
+    for i in a:
+        counts[i] += 1
+
+    buckets = [[] for _ in range(len(a)+1)]
+    for key, value in counts.items():
+        buckets[value].append(key)
+
+    results = []
+    for i in range(len(a), -1, -1):
+        for item in buckets[i]:
+            results.append(item)
+            if len(results) >= k:
+                return results
+
+
+if __name__ == '__main__':
+
+    assert topk_freq_min_heap([1,1,1,2,2,3], 2) == [1,2]
+    assert topk_freq_min_heap([1,1,1,1], 1) == [1]
+    assert topk_freq_min_heap([1,2,3,2,3], 2) == [2,3]
+    assert topk_freq_min_heap([1,2,3,4], 2) == [1, 2]
+
+    assert topk_freq_bucketsort([1,1,1,2,2,3], 2) == [1,2]
+    assert topk_freq_bucketsort([1,1,1,1], 1) == [1]
+    assert topk_freq_bucketsort([1,2,3,2,3], 2) == [2,3]
+    assert topk_freq_bucketsort([1,2,3,4], 2) == [1, 2]
+    

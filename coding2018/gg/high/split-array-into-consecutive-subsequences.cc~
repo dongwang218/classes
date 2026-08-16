@@ -1,0 +1,53 @@
+/*
+https://leetcode.com/problems/split-array-into-consecutive-subsequences/description/
+
+659. Split Array into Consecutive Subsequences
+DescriptionHintsSubmissionsDiscussSolution
+You are given an integer array sorted in ascending order (may contain duplicates), you need to split them into several subsequences, where each subsequences consist of at least 3 consecutive integers. Return whether you can make such a split.
+
+Example 1:
+Input: [1,2,3,3,4,5]
+Output: True
+Explanation:
+You can split them into two consecutive subsequences :
+1, 2, 3
+3, 4, 5
+Example 2:
+Input: [1,2,3,3,4,4,5,5]
+Output: True
+Explanation:
+You can split them into two consecutive subsequences :
+1, 2, 3, 4, 5
+3, 4, 5
+Example 3:
+Input: [1,2,3,4,4,5]
+Output: False
+Note:
+The length of the input is in range of [1, 10000]
+Seen this question in a real interview before?
+Difficulty:Medium
+Total Accepted:12.5K
+Total Submissions:33.2K
+Contributor:fallcreek
+Subscribe to see which companies asked this question.
+
+Related Topics
+
+Similar Questions
+Top K Frequent Elements
+C++
+
+simple try all prefix of consecutive number and recursion.
+dp: for a prefix, loop through its prefix and make sure suffix is contsecutive >=3.
+The issue is there will be repeated nums left. 12334455
+*/
+class Solution {
+
+public:
+
+    bool isPossible(vector<int>& nums) {
+
+
+
+    }
+};

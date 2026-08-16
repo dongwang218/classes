@@ -1,0 +1,87 @@
+/*855
+In an exam room, there are N seats in a single row, numbered 0, 1, 2, ..., N-1.
+
+When a student enters the room, they must sit in the seat that maximizes the distance to the closest person.  If there are multiple such seats, they sit in the seat with the lowest number.  (Also, if no one is in the room, then the student sits at seat number 0.)
+
+Return a class ExamRoom(int N) that exposes two functions: ExamRoom.seat() returning an int representing what seat the student sat in, and ExamRoom.leave(int p) representing that the student in seat number p now leaves the room.  It is guaranteed that any calls to ExamRoom.leave(p) have a student sitting in seat p.
+
+
+
+Example 1:
+
+Input: ["ExamRoom","seat","seat","seat","seat","leave","seat"], [[10],[],[],[],[],[4],[]]
+Output: [null,0,9,4,2,null,5]
+Explanation:
+ExamRoom(10) -> null
+seat() -> 0, no one is in the room, then the student sits at seat number 0.
+seat() -> 9, the student sits at the last seat number 9.
+seat() -> 4, the student sits at the last seat number 4.
+seat() -> 2, the student sits at the last seat number 2.
+leave(4) -> null
+seat() -> 5, the student sits at the last seat number 5.
+
+
+Note:
+
+1 <= N <= 10^9
+ExamRoom.seat() and ExamRoom.leave() will be called at most 10^4 times across all test cases.
+Calls to ExamRoom.leave(p) are guaranteed to have a student currently sitting in seat number p.
+Seen this question in a real interview before?
+Difficulty:Medium
+Total Accepted:5.7K
+Total Submissions:17.4K
+Contributor:1337c0d3r
+Subscribe to see which companies asked this question.
+
+Related Topics
+
+Similar Questions
+Maximize Distance to Closest Person
+C++
+
+maintain each interval (l, r) where l and r are occupied. add them into a queue to find the largest interval. also need a list so that we know what to do when leave it. but c++ pq does not support removing from inside.
+in solution, use a sorted list of student position. take linear time to seat. leave is log(n).
+
+in c++ how to maintain a sorted vector while adding removing.
+*/
+class ExamRoom {
+2
+public:
+3
+    ExamRoom(int N) {
+4
+
+5
+    }
+6
+
+7
+    int seat() {
+8
+
+9
+    }
+10
+
+11
+    void leave(int p) {
+12
+
+13
+    }
+14
+};
+15
+
+16
+/**
+17
+ * Your ExamRoom object will be instantiated and called as such:
+18
+ * ExamRoom obj = new ExamRoom(N);
+19
+ * int param_1 = obj.seat();
+20
+ * obj.leave(p);
+21
+ */

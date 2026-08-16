@@ -1,0 +1,20 @@
+// 890 https://leetcode.com/problems/find-and-replace-pattern/description/
+
+class Solution {
+public:
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+      vector<string> results;
+      for (const auto& word: words) {
+        unordered_map<char, char> perm;
+        if (word.size() != pattern.size()) continue;
+        for (int i = 0; i < pattern.size(); ++i) {
+          char p = pattern[i], w = word[i];
+          auto it = perm.find(p);
+          if (it != perm.end() && w != it->second) continue;
+          perm[p] = w;
+        }
+        results.push_back(word);
+      }
+      return results;
+    }
+};

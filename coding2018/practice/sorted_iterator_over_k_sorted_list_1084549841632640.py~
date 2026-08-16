@@ -1,0 +1,22 @@
+
+import heapq
+
+def merge_k_lists(lists):
+    q = []
+    for l in lists:
+        if l:
+            heapq.heappush(q, (l[0], l, 1))
+
+    while q:
+        item, l, index = heapq.heappop(q)
+        if index < len(l):
+            heapq.heappush(q, (l[index), l, index+1))
+        yield item
+
+if __name__ == '__main__':
+
+    assert list(merge_k_lists([
+        [1, 4, 5, 8, 9],
+        [3, 4, 4, 6],
+        [0, 2, 8],
+        ]) == [0, 1, 2, 3, 4, 4, 4, 5, 6, 8, 8, 9]
